@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tucil II2210</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #869f18;
+        }
+
+        h1 {
+            color: #333;
+        }
+        @keyframes flicker {
+        25%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+        }
+
+    button {
+        padding: 10px 20px;
+        font-size: 20px;
+        margin-top: 20px;
+        cursor: pointer;
+        color: tomato;
+        background-color: #3e09eb;
+        animation: flicker 3s infinite;
+        }
+
+        #quote {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #555;
+            font-style: italic;
+        }
+
+        img {
+            max-width: 70%;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>KASIH PAHAM KAK GEM !!</h1>
+    </header>
+
+    <main>
+        <p>Tekan tombol di bawah ini untuk mendapatkan kata-kata dari kak gem</p>
+        <button id="quoteButton">Kak Gem kata-katanya dong!!</button>
+        <div id="quote"></div>
+    </main>
+
+    <footer>
+        <p>&copy; Mudzaki Kaarzaqiel Hakim 18223024</p>
+    </footer>
+
+    <script>
+        const quotes = [
+            "Hidup adalah 10% apa yang terjadi pada kita dan 90% bagaimana kita bereaksi terhadapnya.",
+            "Kebahagiaan bukanlah sesuatu yang sudah jadi. Itu berasal dari tindakan kita.",
+            "Jangan menunggu; waktu tidak akan pernah 'tepat'. Mulailah dari tempat Anda berdiri, dan bekerja dengan alat apa pun yang Anda miliki.",
+            "Keberhasilan adalah kemampuan untuk pergi dari satu kegagalan ke kegagalan lainnya tanpa kehilangan semangat.",
+            "Hidup ini singkat, jadi jangan sia-siakan waktu untuk menjalani hidup orang lain.",
+            "Kita tidak dapat mengubah arah angin, tetapi kita dapat menyesuaikan layar kita untuk mencapai tujuan.",
+            "Satu-satunya cara untuk melakukan pekerjaan hebat adalah mencintai apa yang Anda lakukan."
+        ];
+
+        document.getElementById('quoteButton').addEventListener('click', function() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const selectedQuote = quotes[randomIndex];
+            const quoteDiv = document.getElementById('quote');
+            quoteDiv.textContent = selectedQuote;
+        });
+    </script>
+</body>
+</html>
