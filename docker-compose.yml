@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+    - "17787:17787"
+    volumes:
+    - motd_data:/app/data
+volumes:
+  motd_data:
