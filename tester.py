@@ -9,17 +9,16 @@ userid = "sister"
 shared_secret = "ii2210_sister"
 
 # ganti dengan url server kalian
-server_url = "http://69.69.69.69:7787"
+server_url = "http://13.64.130.210:17787/motd"
 
 # ganti dengan motd yang diinginkan
-motd = {"motd" : "testing"}
-
+motd = {"motd" : "coba part 2"}
 s = base64.b32encode(shared_secret.encode("utf-8")).decode("utf-8")
 totp = pyotp.TOTP(s=s,digest="SHA256",digits=8)
 x = f"{userid}:" + totp.now()
 
 a = "Basic " + base64.b64encode(bytes(x,encoding="ascii")).decode("ascii")
 
-resp = requests.get(url=server_url, headers={"Authorization" : a}, json=motd)
+resp = requests.post(url=server_url, headers={"Authorization": a}, json=motd)
 
 print(resp.content.decode("utf-8"))
