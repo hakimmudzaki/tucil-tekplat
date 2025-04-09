@@ -112,4 +112,4 @@ async def post_motd(
 if __name__ == "__main__":
     create_db_and_tables()
     import uvicorn
-    uvicorn.run(app, host="192.168.56.1", port=17787)
+    uvicorn.run(app, host="13.64.130.210", port=17787)
