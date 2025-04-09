@@ -1,4 +1,4 @@
-# Gunakan image base Python 3.9
+# Gunakan image base Python 3.10
 FROM python:3.10-slim
 
 # Set working directory
@@ -12,8 +12,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy semua file aplikasi
 COPY . .
-
-# Expose port (hanya dokumentasi)
 EXPOSE 17787
 
 # Perintah untuk menjalankan aplikasi

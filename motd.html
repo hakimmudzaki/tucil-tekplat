@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message of the Day</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ba9b9b;
+            color: #333;
+        }
+        .motd-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 30px;
+        }
+        .motd-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .motd-content {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .motd-meta {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-align: right;
+            font-style: italic;
+        }
+        .empty-state {
+            color: #7f8c8d;
+            text-align: center;
+            padding: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="motd-container">
+        <h1 class="motd-title">Message of the Day kali ini adalah:</h1>
+        
+        {% if motd != "Belum ada message of the day." %}
+        <div class="motd-content">
+            {{ motd }}
+        </div>
+        <div class="motd-meta">
+            <p>dibuat oleh {{ creator }}</p>
+            <p>pada {{ created_at }}</p>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            {{ motd }}
+        </div>
+        {% endif %}
+        <button onclick="location.reload()" style="display: block; margin: 20px auto; padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            MOTD lainnya
+        </button>
+    </div>
+    
+</body>
+</html>

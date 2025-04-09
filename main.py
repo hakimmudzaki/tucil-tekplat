@@ -8,6 +8,7 @@ from sqlmodel import create_engine, Session, SQLModel, select
 from typing import Annotated
 from model import MOTD, MOTDBase
 from datetime import datetime
+from fastapi.templating import Jinja2Templates
 import random
 
 # SQLite Database
@@ -28,6 +29,7 @@ SessionDep = Annotated[Session, Depends(get_session)]
 # FastAPI
 app = FastAPI(docs_url=None, redoc_url=None)
 security = HTTPBasic()
+templates = Jinja2Templates(directory=".") 
 
 # Users - lengkapi dengan userid dan shared_secret yang sesuai
 users = {
@@ -44,17 +46,27 @@ async def root():
     with open("index.html") as f:
         return HTMLResponse(content=f.read(), status_code=200)
 
-@app.get("/motd")
-async def get_motd(session: SessionDep):
-    statement = select(MOTD)
-    results = session.exec(statement).all()
-    
-    if not results:
-        return "message : tidak ada message of the day"
-    
-    random_message = random.choice(results)
-    return f"Message of the day: {random_message.motd} Created At: {random_message.created_at} Creator: {random_message.creator}"
-
+@app.get("/motd", response_class=HTMLResponse)
+async def get_motd(request: Request, session: SessionDep):
+    try:
+        motds = session.exec(select(MOTD)).all()
+        if not motds:
+            return templates.TemplateResponse("motd.html", {"request": request, "motd": "Belum ada message of the day.", "creator": "", "created_at": ""})
+        selected = random.choice(motds)
+        if hasattr(selected, "_mapping") and hasattr(selected, "__getitem__"):
+            motd_obj = selected[0]
+        else:
+            motd_obj = selected
+        
+        return templates.TemplateResponse("motd.html", {"request": request, "motd": motd_obj.motd, "creator": motd_obj.creator, "created_at": str(motd_obj.created_at)})
+    except Exception as e:
+        print(f"Error in get_motd: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail={"motd": "Error retrieving message of the day", "error": str(e)}
+        )
 @app.post("/motd")
 async def post_motd(
     message: MOTDBase, 
@@ -100,4 +112,4 @@ async def post_motd(
 if __name__ == "__main__":
     create_db_and_tables()
     import uvicorn
-    uvicorn.run(app, host="13.64.130.210", port=17787)
+    uvicorn.run(app, host="192.168.56.1", port=17787)
